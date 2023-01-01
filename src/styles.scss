@@ -1,1 +1,53 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./my-theme/layout.scss";
+@import "./my-theme/general.scss";
+@import "./my-theme/breadcum.scss";
+@import "./my-theme/table.scss";
+@import "./my-theme/tabs.scss";
+// @import "./my-theme/dropdown.scss";
+@import "./my-theme/dialog.scss";
+@import "./my-theme/input.scss";
+@import "./my-theme/button.scss";
+
+
+
+.p-selectbutton .p-button{
+    background: transparent;
+    color:#333333;
+    min-width: 4rem;
+}
+
+.p-selectbutton .p-button:not(.p-disabled):not(.p-highlight):hover{
+    background: transparent;
+    color:#333333;
+}
+
+p-dialog-footer{
+    padding-right: 0px;
+}
+
+.p-dialog .p-dialog-content{
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.p-dialog .p-dialog-header{
+    padding-left: 1.5rem;
+}
+
+
+a{
+    text-decoration: none;
+}
+a.decoration{
+    text-decoration: underline;
+}
+
+.normal-cursor{
+    cursor:auto !important;
+}
+
+.layout-topbar .layout-topbar-wrapper .layout-topbar-right .profile-item > ul > li.profile-submenu-header{
+    background-image: none;
+    background-color: #ffffff;
+}

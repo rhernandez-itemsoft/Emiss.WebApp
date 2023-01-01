@@ -1,0 +1,117 @@
+<p-toast></p-toast>
+<p-contextMenu #dtCtxMenu [model]="dtMenuItem"></p-contextMenu>
+<p-contextMenu #dtCtxMenuExport [model]="dtMenuExportItem"></p-contextMenu>
+
+
+<is-security-user-detail [show]="displayDetail" [data]="selectedRow" (onHide)="displayDetail=false"
+    (onClose)="closeDialogDetail($event)" (onGoBackRow)="goBackRow();"
+    (onGoNextRow)="goNextRow();"></is-security-user-detail>
+
+<h3 class="mb-3">Nuevo Usuario</h3>
+<!-- Tabla que muestra los datos -->
+<p-table #dTable [value]="responseDt.data" dataKey="userId" [lazy]="true" (onLazyLoad)="getData($event)"
+    [loading]="false" [loadingIcon]="'fa-spinner'" [resizableColumns]="true" sortField="userId" [sortOrder]="1"
+    selectionMode="single" [(selection)]="selectedRow" [(contextMenuSelection)]="selectedRow" [contextMenu]="dtCtxMenu"
+    (contextmenu)="hideExportMenuContext();" [rows]="newRequestDt.PageSize" [paginator]="false"
+    class="p-datatable p-datatable-gridlines  p-component p-datatable-resizable p-datatable-resizable-fit p-datatable-header">
+
+    <!-- header controls -->
+    <ng-template pTemplate="caption">
+        <div class="flex justify-content-between flex-wrap card-container purple-container">
+            <div class="flex">
+                <p-button icon="icon" label="Agregar"
+                    styleClass="p-button-rounded p-button-text btn-bg-white  p-button-info mr-1"
+                    (click)="showDialogAdd();">
+                    <fa-icon icon="plus" class="icon-size-2"></fa-icon>
+                </p-button>
+            </div>
+            <div>
+                <div class="p-inputgroup">
+                    <input type="text" pInputText placeholder="Buscar..." autocomplete="off"
+                        [(ngModel)]="customFilter.userName" />
+                    <button type="button" pButton pRipple icon="pi pi-search" styleClass="p-button-warn"
+                        (click)="getData(null);"></button>
+                </div>
+
+            </div>
+            <div>
+                <p-button icon="icon"
+                    [styleClass]="'p-button-rounded p-button-text btn-bg-white p-button-info mr-1 '+ (selectedRow? 'p-shadow-3':'')"
+                    title="Exportar" (click)="showMenuContextExport(dtCtxMenuExport, $event)">
+                    <fa-icon icon="download" class="icon-size-2"></fa-icon>
+                </p-button>
+                <p-button icon="icon"
+                    [styleClass]="'p-button-rounded p-button-text btn-bg-white p-button-info mr-1 '+ (selectedRow? 'p-shadow-3':'')"
+                    title="Filtrar" (click)="showDialogFilter();">
+                    <fa-icon icon="filter" class="icon-size-2"></fa-icon>
+                </p-button>
+
+                <p-button icon="icon"
+                    [styleClass]="'p-button-rounded p-button-text btn-bg-white p-button-info mr-1 '+ (selectedRow? 'p-shadow-3':'')"
+                    title="Refrescar" (click)="refreshData();">
+                    <fa-icon icon="sync" class="icon-size-2"></fa-icon>
+                </p-button>
+            </div>
+        </div>
+    </ng-template>
+
+    <!-- header fields-->
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="userId" pResizableColumn [ngStyle]="{ 'display':'none'}" class="p-resizable-column">
+                UserId<p-sortIcon field="userId"></p-sortIcon>
+            </th>
+            <th pSortableColumn="userDetail.firstName" pResizableColumn class="p-col">
+                firstName<p-sortIcon field="userDetail.firstName"></p-sortIcon>
+            </th>
+            <th pSortableColumn="userDetail.lastName" pResizableColumn class="p-col">lastName<p-sortIcon
+                    field="userDetail.lastName"></p-sortIcon>
+            </th>
+            <th pSortableColumn="userDetail.mlastName" pResizableColumn class="p-col">
+                mLastName<p-sortIcon field="userDetail.mlastName"></p-sortIcon>
+            </th>
+
+
+            <th pSortableColumn="enabled" pResizableColumn priority="5"
+                class="p-col-3 p-sm-2 p-md-2 p-lg-2 p-xl-1 text-center">
+                Activo<p-sortIcon field="enabled"></p-sortIcon>
+            </th>
+
+        </tr>
+    </ng-template>
+
+    <!-- body data-->
+    <ng-template pTemplate="body" let-row>
+        <tr [pSelectableRow]="row" [pContextMenuRow]="row">
+            <td [ngStyle]="{ 'display':'none'}"> {{row.userId}} </td>
+            <td>
+                <p-button class="pr-1" title="Refresh" styleClass="p-button-rounded p-button-text p-0 pl-2 pr-1  m-0"
+                    (click)="showMenuContext(dtCtxMenu, $event, row);">
+                    <fa-icon icon="ellipsis-v"></fa-icon>
+                </p-button>
+                {{row.userName}}
+            </td>
+            <td>{{row.group.name}}</td>
+            <td>{{row.userDetail.firstName}}</td>
+            <td>{{row.userDetail.lastName}}</td>
+            <td>{{row.userDetail.mLastName}}</td>
+            <td>{{row.workEmail}}</td>
+            <td class="text-center">{{row.enabled==true?'Yes':'No'}}</td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<!-- footer controls-->
+<p-footer class="p-datatable">
+    <div class="flex justify-content-center flex-wrap card-container purple-container p-datatable-footer p-0">
+        <p-paginator #paginator [rows]="newRequestDt.PageSize" [rowsPerPageOptions]="[10,20,50,100,5000]"
+            [totalRecords]="responseDt.recordsFiltered" 
+           
+            [showCurrentPageReport]="true" (onPageChange)="getData($event)" class="p-fluid">
+        </p-paginator>
+    </div>
+</p-footer>
+
+<div *ngIf="responseDt.data && responseDt.data.length<1">
+    No se encontraron coincidencias
+</div>

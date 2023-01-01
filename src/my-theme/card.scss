@@ -1,0 +1,21 @@
+
+.my-card p-card {
+    min-width: 23rem;
+    max-width: 23rem;
+    margin-right: 1.5rem;
+    margin-bottom: 1.5rem;
+  
+    .p-card.p-component {
+      box-shadow: none;
+      border: solid #dee2e6 1px;
+      padding: 1rem;
+    }
+    .p-card-body {
+      padding: 0px;
+    }
+  
+    p-header {
+      font-size: 14pt;
+      font-weight: bolder;
+    }
+  }

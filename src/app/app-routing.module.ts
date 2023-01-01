@@ -1,10 +1,73 @@
-import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
+import { PrimeModule } from './modules/prime.module';
+import { CallBackService } from './services/callback/callback.service';
+import { CityService } from './services/city/city.service';
+import { CountryService } from './services/country/country.service';
+import { StateService } from './services/state/state.service';
+import { UserService } from './services/user/user.service';
+import { ErrorComponent } from './views/shared/error/error.component';
+import { LayoutComponent } from './views/shared/layout/layout.component';
+import { NotFoundComponent } from './views/shared/not-found/not-found.component';
+import { UserAddComponent } from './views/user/user-add/user-add.component';
+import { UserComponent } from './views/user/user.component';
 
-const routes: Routes = [];
+export const routes: Routes = [
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      { path: '', component: UserComponent },
+    ]
+  },
+
+  { path: 'error', component: ErrorComponent },
+  { path: 'notfound', component: NotFoundComponent },
+  { path: '**', redirectTo: '/notfound' },
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    FontAwesomeModule,
+    ReactiveFormsModule,
+    PrimeModule,
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled', useHash: false }),
+    // RouterModule.forRoot(routes)
+  ],
+  declarations: [
+    UserComponent,
+    UserAddComponent
+  ],
+  exports: [
+    RouterModule,
+    PrimeModule
+  ],
+  providers: [
+    UserService,
+    // GroupService,
+
+    CallBackService,
+    MessageService,
+    DialogService,
+
+    CountryService,
+    StateService,
+    CityService,
+
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppRoutingModule { }

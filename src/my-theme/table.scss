@@ -1,0 +1,103 @@
+.p-datatable .p-datatable-header {
+  background: transparent;
+
+  // border: none;
+}
+.p-datatable.p-datatable-gridlines .p-datatable-thead > tr > th {
+  background-color: #efefef;
+}
+.p-datatable .p-datatable-tbody > tr > td {
+  // padding: 0.75rem 0.75rem;
+}
+.p-datatable .p-datatable-header {
+  // padding: 0.25rem .5rem;
+}
+
+// .p-datatable.p-datatable-gridlines .p-datatable-thead > tr > th{
+//   background: #51749e;
+//   color: #fff;
+// }
+.p-datatable .p-datatable-footer {
+  border-width: 0px 1px 1px 1px;
+  background-color: transparent;
+}
+.p-dialog .p-dialog-header {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.p-datatable .p-datatable-tbody > tr > td > p-button > button {
+  // width: 2.5rem;
+  // height: 2.5rem;
+  // margin-right: .5rem;
+  // padding-left: 0.5rem;
+  // border:transparent solid 1px !important;
+  fa-icon {
+    // height: 2rem;
+    // width: 2rem;
+    // line-height: 2rem;
+  }
+}
+
+.p-datatable .p-datatable-tbody > tr.p-highlight > td > p-button > button {
+  border: #bcbdbf solid 1px !important;
+  // background-color: #fff;
+  // width: 2.5rem;
+  // height: 2.5rem;
+  // margin: 0.5rem;
+  // padding-left: 0.5rem;
+
+  fa-icon {
+    // height: 2rem;
+    // width: 3rem;
+    // line-height: 2rem;
+    color: #fff;
+  }
+}
+
+.p-datatable .p-datatable-tbody > tr.p-highlight > td > p-button > button:hover {
+  background-color: #fff;
+  border: #ffffff solid 1px !important;
+  // width: 2.5rem;
+  // height: 2.5rem;
+  // margin-right: 1rem;
+}
+
+.p-datatable.p-datatable-gridlines .p-datatable-thead > tr > th {
+  padding-left: 1rem !important;
+  // text-align: center;
+  // p-sorticon {
+  //   float: left;
+  //   margin-right: 0.5rem;
+  // }
+}
+
+.p-datatable.p-datatable-gridlines .p-datatable-tbody > tr > td {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+a,
+  .p-fluid .p-dropdown .p-dropdown-label,
+  // .p-datatable.p-datatable-gridlines .p-datatable-thead > tr > th ,
+  // .p-datatable.p-datatable-gridlines .p-datatable-thead > tr > th:hover,
+  // .p-datatable.p-datatable-gridlines .p-datatable-thead > tr > th  *,
+  .p-dropdown-panel .p-dropdown-items .p-dropdown-item,
+  .p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover,
+  .p-dropdown .p-dropdown-trigger {
+  color: #5e81ac;
+}
+
+// .p-datatable.p-datatable-gridlines .p-datatable-thead > tr > th ,
+// .p-datatable.p-datatable-gridlines .p-datatable-thead > tr > th:hover,
+.p-datatable.p-datatable-gridlines .p-datatable-thead > tr > th > p-sorticon > i {
+  color: transparent !important;
+}
+.p-datatable.p-datatable-gridlines .p-datatable-thead > tr > th,
+.p-datatable.p-datatable-gridlines .p-datatable-thead > tr > th:hover *,
+.p-datatable.p-datatable-gridlines .p-datatable-thead > tr > th > p-sorticon > i.pi-sort-amount-up-alt,
+.p-datatable.p-datatable-gridlines .p-datatable-thead > tr > th > p-sorticon > i.pi-sort-amount-down {
+  color: #000000 !important;
+}
+
+.p-paginator {
+  background: none;
+}

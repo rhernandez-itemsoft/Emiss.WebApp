@@ -1,0 +1,33 @@
+.custom-calendar.p-datepicker {
+  min-width: 27rem !important;
+  height: 28rem !important;
+}
+.p-component-overlay.p-datepicker-mask {
+  z-index: 4 !important;
+  position: relative;
+}
+
+
+//Fix style p-password
+p-password{
+  width: 100% !important;
+  position: relative;
+  div:first-child{
+    flex: 1 1 auto;
+    display: flex;
+  
+    i.pi{
+      right: 0.75rem;
+      color: #495057;
+
+      position: absolute;
+      top: 50%;
+      margin-top: -0.5rem;
+    }
+  }
+  
+
+  .p-password{
+    width: 100% !important;
+  }
+}

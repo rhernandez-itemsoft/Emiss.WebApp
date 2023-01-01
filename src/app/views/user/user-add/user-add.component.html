@@ -1,0 +1,111 @@
+<p-dynamicdialog>
+	<p-dialog-content>
+		<div class="scroll-modal pt-3">
+
+			<form [formGroup]="frmUser">
+				<div class="grid p-fluid  p-formgrid ">
+					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
+						<label for="firstName">* First Name</label>
+						<input type="text" pInputText autocomplete="off" autofocus="on" maxlength="100"
+							formControlName="firstName" />
+					</div>
+					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
+						<label>* Last Name</label>
+						<input type="text" pInputText autocomplete="off" autofocus="on" maxlength="100"
+							formControlName="lastName" />
+					</div>
+					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
+						<label>M. Last Name</label>
+						<input type="text" pInputText autocomplete="off" autofocus="on" maxlength="100"
+							formControlName="mLastName" />
+					</div>
+					<!-- <div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
+						<label for="email">* {{'security.user.personalEmail' | translate}}</label>
+						<div class="p-inputgroup">
+							<span class="p-inputgroup-addon"><i class="pi pi-at"></i></span>
+							<input type="email" pInputText autocomplete="off" autofocus="on" maxlength="100"
+								formControlName="personalEmail" />
+						</div>
+					</div> -->
+
+				</div>
+
+			</form>
+			<form [formGroup]="frmAddressBook">
+				<div class="grid p-fluid  p-formgrid mt-1 ">
+
+					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
+						<label for="street">Calle y Número</label>
+						<input type="text" pInputText autocomplete="off" autofocus="on" maxlength="100" formControlName="street" placeholder="Calle #000 - Interior" />
+					</div>
+
+					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
+						<label for="zipCode">Código Postal</label>
+						<input type="text" pInputText autocomplete="off" autofocus="on" maxlength="10" formControlName="zipCode" />
+					</div>
+
+					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
+						<label for="subdivision">Colonia</label>
+						<input type="text" pInputText autocomplete="off" autofocus="on" maxlength="100" formControlName="subdivision" />
+					</div>
+
+					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4" >
+						<label for="country">País</label>
+						<p-dropdown [options]="allCountries" appendTo="body" [readonly]="allCountries.length==1"
+							optionLabel="name" [showClear]="allCountries.length>1" formControlName="country"
+							placeholder="- Seleccione -">
+							<ng-template pTemplate="selectedItem">
+								<div class="country-item country-item-value"
+									*ngIf="frmAddressBook.controls['country'].value">
+									<div>{{frmAddressBook.controls['country'].value.name}}</div>
+								</div>
+							</ng-template>
+							<ng-template let-country pTemplate="item" *ngIf="frmAddressBook.controls['country'].value">
+								<div class="country-item">
+									<div>{{frmAddressBook.controls['country'].value.name}}</div>
+								</div>
+							</ng-template>
+						</p-dropdown>
+
+					</div>
+
+					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
+						<label for="state">Estado</label>
+						<p-dropdown [options]="allStates" appendTo="body"
+							[readonly]="frmAddressBook.controls['country'].value==null" optionLabel="name"
+							[filter]="true" filterBy="name" (onFilter)="onFilterState($event)"
+							(onClear)="onClearState($event);" [showClear]="true" formControlName="state"
+							placeholder="- Seleccione -"
+							emptyMessage="No se encontraron coincidencias"></p-dropdown>
+					</div>
+
+					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
+						<label for="city">Ciudad</label>
+						<p-dropdown [options]="allCities" appendTo="body"
+							[readonly]="frmAddressBook.controls['state'].value==null" optionLabel="name" [filter]="true"
+							filterBy="name" (onFilter)="onFilterCity($event)" (onClear)="onClearCity($event);"
+							[showClear]="true" formControlName="city" placeholder="- Seleccione -"
+							emptyMessage="No se encontraron coincidencias"></p-dropdown>
+					</div>
+
+				
+
+					<div class="sm:col-12 md:col-12 lg:col-12 xl:col-12">
+						<label for="reference">Referencia</label>
+						<input type="text" pInputText autocomplete="off" autofocus="on" maxlength="100" formControlName="reference" />
+					</div>
+				</div>
+			</form>
+		</div>
+		<p-divider></p-divider>
+	</p-dialog-content>
+
+	<p-dialog-footer class="flex justify-content-end flex-wrap card-container green-container">
+		<button type="button" pButton pRipple [disabled]="(frmUser.valid==false ) || doingRequest==true"
+			icon="pi pi-check" (click)="save()" label="Guardar" class="p-button-primary mr-3">
+			<p-progressSpinner class="buttonSpinner" *ngIf="doingRequest==true"></p-progressSpinner>
+		</button>
+		<button type="button" pButton pRipple icon="pi pi-times" (click)="close()" label="Cancelar"
+			class="p-button-outlined"></button>
+	</p-dialog-footer>
+</p-dynamicdialog>

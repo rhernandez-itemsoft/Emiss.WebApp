@@ -1,0 +1,22 @@
+.p-dialog-content {
+  overflow-y: unset !important;
+}
+
+.p-dialog .p-dialog-header {
+  background: #51749e;
+  color: #fff;
+  // padding: 0.5rem !important;
+}
+
+.p-dialog .p-dialog-header .p-dialog-header-icon {
+  color: #ffffff;
+}
+.p-dialog .p-dialog-header .p-dialog-header-icon:enabled:hover {
+  color: #F8f8F0;
+}
+
+
+p-dialog-footer{
+  padding: .5rem;
+  padding-right: .75rem;
+}

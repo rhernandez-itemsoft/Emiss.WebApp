@@ -1,0 +1,54 @@
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+}
+button:focus {
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+*:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+
+.expand {
+    width: 100%;
+}
+
+
+.btn-bg-white,
+.bg-white {
+    background-color: #ffffff;
+}
+
+.height-30 {
+    height: 30rem;
+}
+
+.scroll-modal {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(100vh - 10rem);
+}
+
+.imgProfileDummy {
+    min-height: 8rem;
+    max-height: 8rem;
+    height: 4.25rem;
+    // min-width: 7rem;
+    // min-width: 5rem;
+    // max-width: 5rem;
+    width: auto;
+    object-fit: contain;
+}
+
+.icon-size-2 {
+    font-size: 1.25rem;
+    line-height: 1.25rem;
+}
+
+.img-td {
+    // max-width: 2rem;
+    // max-height: 2rem;
+    object-fit: cover;
+}

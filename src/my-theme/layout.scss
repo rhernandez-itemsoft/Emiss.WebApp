@@ -1,0 +1,22 @@
+
+.layout-wrapper-static .layout-sidebar .sidebar-logo img {
+    height: auto;
+    // width: 150px;
+    max-height: 50px;
+  }
+  
+  
+.sidebar-pin {
+  display: inline-block;
+}
+
+.layout-sidebar .layout-menu-container .layout-menu li ul li a{
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.layout-wrapper-static .layout-sidebar .layout-menu li > a i.layout-submenu-toggler
+{
+    margin-right: 1rem !important;
+    right: 0px !important;
+}

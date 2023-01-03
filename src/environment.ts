@@ -28,6 +28,7 @@ export enum ApiName {
 };
 
 export enum EndpointName {
+  AddressBook = 'AddressBook',
   User = 'User',
   City = 'City',
   Country = 'Country',

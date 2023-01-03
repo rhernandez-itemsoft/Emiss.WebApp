@@ -13,8 +13,11 @@ import { PrimeModule } from './modules/prime.module';
 import { CallBackService } from './services/callback/callback.service';
 import { CityService } from './services/city/city.service';
 import { CountryService } from './services/country/country.service';
+import { ExternalService } from './services/external/external.service';
 import { StateService } from './services/state/state.service';
 import { UserService } from './services/user/user.service';
+import { AddressBookAddComponent } from './views/address-book/address-book-add/address-book-add.component';
+import { AddressBookComponent } from './views/address-book/address-book.component';
 import { ErrorComponent } from './views/shared/error/error.component';
 import { LayoutComponent } from './views/shared/layout/layout.component';
 import { NotFoundComponent } from './views/shared/not-found/not-found.component';
@@ -26,7 +29,7 @@ export const routes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
-      { path: '', component: UserComponent },
+      { path: '', component: AddressBookComponent },
     ]
   },
 
@@ -48,7 +51,10 @@ export const routes: Routes = [
   ],
   declarations: [
     UserComponent,
-    UserAddComponent
+    UserAddComponent,
+    
+    AddressBookComponent,
+    AddressBookAddComponent
   ],
   exports: [
     RouterModule,
@@ -65,7 +71,7 @@ export const routes: Routes = [
     CountryService,
     StateService,
     CityService,
-
+    ExternalService,
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

@@ -12,7 +12,7 @@ export class UserModel {
     // workEmail: string = '';
     // groupId: number = 0;
     // group: GroupModel | null = null;
-    addressBook: AddressBookModel | null = null;
+    //addressBook: AddressBookModel | null = null;
     //  addressBook: AddressBookModel[]  = [];
     
     enabled: boolean = false;

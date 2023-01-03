@@ -43,17 +43,6 @@ export class BaseApiService {
         return this.baseHttp.delete<HttpResponse<HttpResponseApi<any>>>(env.getUlrApi(apiName, endpointName));
     }
 
-    // patch<T>(apiName: ApiName, endpointName: EndpointName, id: number, input: T): Observable<HttpResponse<HttpResponseApi<any>>> {
-    //     return this.baseHttp.patch<HttpResponse<HttpResponseApi<any>>>(env.getUlrApi(apiName, `${endpointName}/${id}`), input);
-    // }
-
-    // put<T>(apiName: ApiName, endpointName: EndpointName, id: number, input: T): Observable<HttpResponse<HttpResponseApi<any>>> {
-    //     return this.baseHttp.put<HttpResponse<HttpResponseApi<any>>>(env.getUlrApi(apiName, `${endpointName}/${id}`), input);
-    // }
-
-    // delete(apiName: ApiName, endpointName: EndpointName, id: number): Observable<HttpResponse<HttpResponseApi<any>>> {
-    //     return this.baseHttp.delete<HttpResponse<HttpResponseApi<any>>>(env.getUlrApi(apiName, `${endpointName}/${id}`));
-    // }
 
 }
 

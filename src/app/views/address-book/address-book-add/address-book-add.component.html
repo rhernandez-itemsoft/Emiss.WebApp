@@ -1,0 +1,149 @@
+<p-dynamicdialog>
+	<p-dialog-content>
+		<div class="scroll-modal pt-3">
+			<!-- User form -->
+			<form [formGroup]="frmUser">
+
+				<div class="grid p-fluid  p-formgrid ">
+					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
+						<label for="firstName">* First Name</label>
+						<div class="grid p-fluid  p-formgrid ">
+							<div class="sm:col-12 md:col-10 lg:col-10 xl:col-10">
+								<input type="text" pInputText autocomplete="off" autofocus="on" maxlength="100" minlength="5" formControlName="firstName" required />
+							</div>
+							<div class="sm:col-12 md:col-2 lg:col-2 xl:col-2">
+								<button type="button" pButton autofocus="off" pRipple icon="pi pi-search" (click)="onSelectUser()" label="" class="p-button-outlined "></button>
+							</div>
+						</div>
+					</div>
+					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
+						<label>* Last Name</label>
+						<input type="text" pInputText autocomplete="off" maxlength="100" formControlName="lastName" />
+					</div>
+					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
+						<label>M. Last Name</label>
+						<input type="text" pInputText autocomplete="off" maxlength="100" formControlName="mLastName" />
+					</div>
+
+				</div>
+			</form>
+
+			<!-- Address Book Form -->
+			<form [formGroup]="frmAddressBook">
+				<div class="grid p-fluid  p-formgrid  ">
+
+					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
+						<label for="phone">* Phone</label>
+						<input type="text" pInputText autocomplete="off" maxlength="10" formControlName="phone" placeholder="(###)###-####" />
+					</div>
+					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
+						<label for="email">* e-Mail</label>
+						<input type="email" pInputText autocomplete="off" maxlength="20" formControlName="email" placeholder="youremail@email.com" />
+					</div>
+
+
+					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
+						<label for="country">País</label>
+						<p-dropdown [options]="allCountries" appendTo="body" optionLabel="name" [filter]="true" filterBy="name" (onFilter)="onFilterState($event)" (onClear)="onClearState($event);" [showClear]="true"
+							formControlName="country" emptyMessage="No se encontraron coincidencias" emptyFilterMessage="No se encontraron coincidencias" placeholder="- Seleccione -">
+							<ng-template pTemplate="selectedItem">
+								<div class="country-item country-item-value" *ngIf="frmAddressBook.controls['country'].value">
+									<div>{{frmAddressBook.controls['country'].value.name}}</div>
+								</div>
+							</ng-template>
+							<ng-template let-country pTemplate="item" *ngIf="frmAddressBook.controls['country'].value">
+								<div class="country-item">
+									<div>{{frmAddressBook.controls['country'].value.name}}</div>
+								</div>
+							</ng-template>
+							<ng-template let-country pTemplate="emptyfilter">
+								<div class="state-item">
+									<div>No se encontraron coincidencias</div>
+									<a href="#">Agregar</a>
+								</div>
+							</ng-template>
+						</p-dropdown>
+					</div>
+
+					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
+						<label for="zipCode">* Código Postal</label>
+						<input type="text" pInputText autocomplete="off" maxlength="10" formControlName="zipCode" placeholder="#######" (change)="completeAddress();" />
+					</div>
+
+					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
+						<label for="state">Estado</label>
+						<p-dropdown [options]="allStates" appendTo="body" optionLabel="name" [filter]="true" filterBy="name" (onFilter)="onFilterState($event)" (onClear)="onClearState($event);" [showClear]="true" formControlName="state"
+							emptyMessage="No se encontraron coincidencias" emptyFilterMessage="No se encontraron coincidencias" placeholder="- Seleccione -">
+							<ng-template pTemplate="selectedItem">
+								<div class="state-item state-item-value" *ngIf="frmAddressBook.controls['state'].value">
+									<div>{{frmAddressBook.controls['state'].value.name}}</div>
+								</div>
+							</ng-template>
+							<ng-template let-country pTemplate="item" *ngIf="frmAddressBook.controls['state'].value">
+								<div class="state-item">
+									<div>{{frmAddressBook.controls['state'].value.name}}</div>
+								</div>
+							</ng-template>
+							<ng-template let-country pTemplate="emptyfilter">
+								<div class="state-item">
+									<div>No se encontraron coincidencias</div>
+									<a href="#">Agregar</a>
+								</div>
+							</ng-template>
+						</p-dropdown>
+
+						<!-- <p-dropdown [options]="allStates" appendTo="body" [readonly]="frmAddressBook.controls['country'].value==null" optionLabel="name" [filter]="true" filterBy="name" (onFilter)="onFilterState($event)"
+							(onClear)="onClearState($event);" [showClear]="true" formControlName="state" placeholder="- Seleccione -" emptyMessage="No se encontraron coincidencias"></p-dropdown> -->
+					</div>
+
+					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
+						<label for="city">Ciudad</label>
+						<p-dropdown [options]="allCities" appendTo="body" optionLabel="name" [filter]="true" filterBy="name" (onFilter)="onFilterCity($event)" (onClear)="onClearCity($event);" [showClear]="true" formControlName="city"
+							emptyMessage="No se encontraron coincidencias" emptyFilterMessage="No se encontraron coincidencias" placeholder="- Seleccione -">
+							<ng-template pTemplate="selectedItem">
+								<div class="city-item city-item-value" *ngIf="frmAddressBook.controls['city'].value">
+									<div>{{frmAddressBook.controls['city'].value.name}}</div>
+								</div>
+							</ng-template>
+							<ng-template let-country pTemplate="item" *ngIf="frmAddressBook.controls['city'].value">
+								<div class="city-item">
+									<div>{{frmAddressBook.controls['city'].value.name}}</div>
+								</div>
+							</ng-template>
+							<ng-template let-country pTemplate="emptyfilter">
+								<div class="city-item">
+									<div>No se encontraron coincidencias</div>
+									<a href="#">Agregar</a>
+								</div>
+							</ng-template>
+						</p-dropdown>
+						<!-- <p-dropdown [options]="allCities" appendTo="body" [readonly]="frmAddressBook.controls['state'].value==null" optionLabel="name" [filter]="true" filterBy="name" (onFilter)="onFilterCity($event)"
+							(onClear)="onClearCity($event);" [showClear]="true" formControlName="city" placeholder="- Seleccione -" emptyMessage="No se encontraron coincidencias"></p-dropdown> -->
+					</div>
+
+					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
+						<label for="street">* Calle y Número</label>
+						<input type="text" pInputText autocomplete="off" maxlength="100" formControlName="street" placeholder="Calle #Exterior - #Interior" />
+					</div>
+
+					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
+						<label for="subdivision">Colonia</label>
+						<input type="text" pInputText autocomplete="off" maxlength="100" formControlName="subdivision" />
+					</div>
+					<div class="sm:col-12 md:col-12 lg:col-12 xl:col-12">
+						<label for="reference">Referencia</label>
+						<input type="text" pInputText autocomplete="off" maxlength="100" formControlName="reference" />
+					</div>
+				</div>
+			</form>
+		</div>
+		<p-divider></p-divider>
+	</p-dialog-content>
+
+	<p-dialog-footer class="flex justify-content-end flex-wrap card-container green-container">
+		<button type="button" pButton pRipple [disabled]="(frmUser.valid==false || frmAddressBook.valid==false ) || doingRequest==true" icon="pi pi-check" (click)="save()" label="Guardar" class="p-button-primary mr-3">
+			<p-progressSpinner class="buttonSpinner" *ngIf="doingRequest==true"></p-progressSpinner>
+		</button>
+		<button type="button" pButton pRipple icon="pi pi-times" (click)="close()" label="Cancelar" class="p-button-outlined"></button>
+	</p-dialog-footer>
+</p-dynamicdialog>

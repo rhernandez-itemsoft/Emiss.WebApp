@@ -1,32 +1,32 @@
 import { formatDate } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectorRef, Component, Inject, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MessageService } from 'primeng/api';
-import { ContextMenu } from 'primeng/contextmenu';
 import { DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
-import { UserModel, UserFilter } from 'src/app/models/user-model';
-import { UserService } from 'src/app/services/user/user.service';
+import { AddressBookModel, AddressBookFilter } from 'src/app/models/address-book-model';
+import { AddressBookService } from 'src/app/services/address-book/address-book.service';
+
 import { Base64 } from 'src/app/utils/base64/base64';
 import { DataTable } from 'src/app/utils/data-table/datatable';
 import { IDataTable } from 'src/app/utils/data-table/idatatable';
 import { EndpointName, ApiName } from 'src/environment';
-import { UserAddComponent } from './user-add/user-add.component';
-import { UserDeleteComponent } from './user-delete/user-delete.component';
-import { UserEditComponent } from './user-edit/user-edit.component';
-import { UserFilterComponent } from './user-filter/user-filter.component';
+import { AddressBookAddComponent } from './address-book-add/address-book-add.component';
+import { AddressBookDeleteComponent } from './address-book-delete/address-book-delete.component';
+import { AddressBookEditComponent } from './address-book-edit/address-book-edit.component';
+import { AddressBookFilterComponent } from './address-book-filter/address-book-filter.component';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss']
+  selector: 'app-address-book',
+  templateUrl: './address-book.component.html',
+  styleUrls: ['./address-book.component.scss']
 })
-export class UserComponent extends DataTable<UserModel, UserFilter> implements IDataTable {
+export class AddressBookComponent extends DataTable<AddressBookModel, AddressBookFilter> implements IDataTable {
 
   //The contructor
   constructor(
     public domSanitizer: DomSanitizer,
-    private securityUserService: UserService,
+    private addressBookervice: AddressBookService,
 
     private msg: MessageService,
     public ref: DynamicDialogRef,
@@ -37,17 +37,17 @@ export class UserComponent extends DataTable<UserModel, UserFilter> implements I
     super(
       dialogService,
 
-      UserAddComponent,
+      AddressBookAddComponent,
 
-      UserEditComponent,
+      AddressBookEditComponent,
 
-      UserDeleteComponent,
+      AddressBookDeleteComponent,
 
-      UserFilterComponent,
+      AddressBookFilterComponent,
 
-      'userId',
+      'addressBookId',
 
-      EndpointName.User
+      EndpointName.AddressBook
 
     );
 
@@ -60,10 +60,8 @@ export class UserComponent extends DataTable<UserModel, UserFilter> implements I
     // show breadcrumb
     this.setBreadcrumb();
 
-     //init context menu
-     this.initContextMenu();
-
-     this.dtMenuItem.push({ label: 'Seleccionar', icon: 'fa pi-fw pi pi-pencil', command: () => this.showDialogEdit() });
+    //init context menu
+    this.initContextMenu();
 
     //init the form filters
     this.initFormFilters();
@@ -72,14 +70,10 @@ export class UserComponent extends DataTable<UserModel, UserFilter> implements I
     this.initDataTable();
 
     //init custom filters
-    this.customFilter = <UserFilter>{
-      groupId: null,
+    this.customFilter = <AddressBookFilter>{
+      addressBookId: null,
       enabled: true,
-      userName: '',
-      workEmail: '',
-      firstName: '',
-      lastName: '',
-      mLastName: '',
+      alias: ''
     };
 
   }
@@ -87,9 +81,9 @@ export class UserComponent extends DataTable<UserModel, UserFilter> implements I
 
   //inicializa el data table
   override initDataTable() {
-    this.newRequestDt.fields = 'userId,firstName,lastName,mlastName,enabled';
-    this.newRequestDt.exportFields = 'userId,firstName,lastName,mlastName,enabled';
-    this.newRequestDt.sortField = 'firstName,lastName,mlastName';
+    this.newRequestDt.fields = 'addressBookId,alias,phone,email,country,city,state,countryId,stateId,cityId,street,subdivision,reference,zipCode,enabled,user';
+    this.newRequestDt.exportFields = 'addressBookId,alias,userFullName';
+    this.newRequestDt.sortField = 'alias';
   }
 
   //Obtiene los datos que se mostrarán en el DataTable
@@ -100,7 +94,7 @@ export class UserComponent extends DataTable<UserModel, UserFilter> implements I
       delete this.newRequestDt.groupId;
     }
 
-    this.securityUserService.get<UserModel[]>(ApiName.Default, `${EndpointName.User}`, this.newRequestDt)
+    this.addressBookervice.get<AddressBookModel[]>(ApiName.Default, `${EndpointName.AddressBook}`, this.newRequestDt)
       .subscribe({
         next: (response: any) => {
           this.responseDt = this.wrapPaginateResponse(response);
@@ -110,13 +104,12 @@ export class UserComponent extends DataTable<UserModel, UserFilter> implements I
           }
         },
         error: (err: HttpErrorResponse) => {
-          if (err.status != 404 ){
+          if (err.status != 404) {
             this.responseDt = this.emptyResonse();
-            const _msg = (err.error != null && err.error.message  ? err.error.message : err.message || err.statusText);
+            const _msg = (err.error != null && err.error.message ? err.error.message : err.message || err.statusText);
             const _severity = err.status == 404 ? 'info' : 'error';
-  
-            this.msg.add({ severity: _severity, summary: 'Error', detail: _msg });
 
+            this.msg.add({ severity: _severity, summary: 'Error', detail: _msg });
           }
         },
       });
@@ -128,18 +121,18 @@ export class UserComponent extends DataTable<UserModel, UserFilter> implements I
   override exportToCsv() {
 
     super.exportToCsv();
-    this.securityUserService.get(ApiName.Default, `${EndpointName.User}/ExportCsv`, this.newRequestDt)
+    this.addressBookervice.get(ApiName.Default, `${EndpointName.AddressBook}/ExportCsv`, this.newRequestDt)
       .subscribe({
         next: (response: any) => {
 
           //download report
           let data: string = response.body?.data;
-          let fileName: string = '/user_report' + formatDate(new Date(), 'yyyy-MM-dd', 'en');
+          let fileName: string = '/addressBook_report' + formatDate(new Date(), 'yyyy-MM-dd', 'en');
           Base64.toFile(data, 'csv', fileName);
           return;
         },
         error: (err: HttpErrorResponse) => {
-          const _msg = (err.error != null && err.error.message  ? err.error.message : err.message || err.statusText);
+          const _msg = (err.error != null && err.error.message ? err.error.message : err.message || err.statusText);
           const _severity = err.status == 404 ? 'info' : 'error';
           this.msg.add({ severity: _severity, summary: 'Error', detail: _msg });
         },
@@ -150,18 +143,18 @@ export class UserComponent extends DataTable<UserModel, UserFilter> implements I
   override exportToXls() {
 
     super.exportToXls();
-    this.securityUserService.get(ApiName.Default, `${EndpointName.User}/ExportXls`, this.newRequestDt)
+    this.addressBookervice.get(ApiName.Default, `${EndpointName.AddressBook}/ExportXls`, this.newRequestDt)
       .subscribe({
         next: (response: any) => {
 
           //download report
           let data: string = response.body?.data;
-          let fileName: string = '/user_report' + formatDate(new Date(), 'yyyy-MM-dd', 'en');
+          let fileName: string = '/addressBook_report' + formatDate(new Date(), 'yyyy-MM-dd', 'en');
           Base64.toFile(data, 'xls', fileName);
           return;
         },
         error: (err: HttpErrorResponse) => {
-          const _msg = (err.error != null && err.error.message  ? err.error.message : err.message || err.statusText);
+          const _msg = (err.error != null && err.error.message ? err.error.message : err.message || err.statusText);
           const _severity = err.status == 404 ? 'info' : 'error';
           this.msg.add({ severity: _severity, summary: 'Error', detail: _msg });
         },
@@ -173,18 +166,18 @@ export class UserComponent extends DataTable<UserModel, UserFilter> implements I
   override exportToPdf() {
 
     super.exportToPdf();
-    this.securityUserService.get(ApiName.Default, `${EndpointName.User}/ExportPdf`, this.newRequestDt)
+    this.addressBookervice.get(ApiName.Default, `${EndpointName.AddressBook}/ExportPdf`, this.newRequestDt)
       .subscribe({
         next: (response: any) => {
 
           //download report
           let data: string = response.body?.data;
-          let fileName: string = '/user_report' + formatDate(new Date(), 'yyyy-MM-dd', 'en');
+          let fileName: string = '/addressBook_report' + formatDate(new Date(), 'yyyy-MM-dd', 'en');
           Base64.toFile(data, 'pdf', fileName);
           return;
         },
         error: (err: HttpErrorResponse) => {
-          const _msg = (err.error != null && err.error.message  ? err.error.message : err.message || err.statusText);
+          const _msg = (err.error != null && err.error.message ? err.error.message : err.message || err.statusText);
           const _severity = err.status == 404 ? 'info' : 'error';
           this.msg.add({ severity: _severity, summary: 'Error', detail: _msg });
         },
@@ -192,31 +185,31 @@ export class UserComponent extends DataTable<UserModel, UserFilter> implements I
 
   }
 
-  //show dialog - new user
+  //show dialog - new addressBook
   override showDialogAdd(): DynamicDialogRef {
     this.dialogTitles.new = 'Agregar';
     return super.showDialogAdd({ width: '80rem' });
   }
 
-  //show dialog - edit user
+  //show dialog - edit addressBook
   override showDialogEdit(): DynamicDialogRef | null {
     if (this.selectedRow == null) {
       return null;
     }
-    this.dialogTitles.edit = 'Editar: ' + `${this.selectedRow.firstName} ${this.selectedRow.lastName} ${this.selectedRow.mLastName}` ;
+    this.dialogTitles.edit = 'Editar: ' + `${this.selectedRow.alias}`;
     return super.showDialogEdit({ width: '80rem' });
   }
 
-  //show dialog - delete user
+  //show dialog - delete addressBook
   override showDialogDelete(): DynamicDialogRef | null {
     if (this.selectedRow == null) {
       return null;
     }
-    this.dialogTitles.delete = 'Eliminar: ' + `${this.selectedRow.firstName} ${this.selectedRow.lastName} ${this.selectedRow.mLastName}` ;
+    this.dialogTitles.delete = 'Eliminar: ' + `${this.selectedRow.alias}`;
     return super.showDialogDelete({ width: '40rem', data: this.selectedRow });
   }
 
-  //show dialog filter users
+  //show dialog filter addressBooks
   override showDialogFilter(): DynamicDialogRef {
 
     this.dialogTitles.filter = 'Filtrar';

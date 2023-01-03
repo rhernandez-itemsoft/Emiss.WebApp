@@ -1,11 +1,12 @@
 <p-toast></p-toast>
-<p-contextMenu #dtCtxMenu [model]="dtMenuItem"  appendTo="body"></p-contextMenu>
-<p-contextMenu #dtCtxMenuExport [model]="dtMenuExportItem"  appendTo="body"></p-contextMenu>
-<div  #btnX ></div>
+<p-contextMenu #dtCtxMenu [model]="dtMenuItem"></p-contextMenu>
+<p-contextMenu #dtCtxMenuExport [model]="dtMenuExportItem"></p-contextMenu>
 
-<!-- <h3 class="mb-3">Nuevo Usuario</h3> -->
+
+
+<h3 class="mb-3">Agenda de Direcciones</h3>
 <!-- Tabla que muestra los datos -->
-<p-table #dTableX [value]="responseDt.data" dataKey="userId" [lazy]="true" (onLazyLoad)="getData($event)" [loading]="false" [loadingIcon]="'fa-spinner'" [resizableColumns]="true" sortField="userId" [sortOrder]="1" selectionMode="single"
+<p-table #dTable [value]="responseDt.data" dataKey="userId" [lazy]="true" (onLazyLoad)="getData($event)" [loading]="false" [loadingIcon]="'fa-spinner'" [resizableColumns]="true" sortField="userId" [sortOrder]="1" selectionMode="single"
     [(selection)]="selectedRow" [(contextMenuSelection)]="selectedRow" [contextMenu]="dtCtxMenu" (contextmenu)="hideExportMenuContext();" [rows]="newRequestDt.PageSize" [paginator]="false"
     class="p-datatable p-datatable-gridlines  p-component p-datatable-resizable p-datatable-resizable-fit p-datatable-header">
 
@@ -13,14 +14,13 @@
     <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-wrap card-container purple-container">
             <div class="flex">
-                <!-- <p-button icon="icon" label="Agregar" styleClass="p-button-rounded p-button-text btn-bg-white  p-button-info mr-1" (click)="showDialogAdd();">
+                <p-button icon="icon" label="Agregar" styleClass="p-button-rounded p-button-text btn-bg-white  p-button-info mr-1" (click)="showDialogAdd();">
                     <fa-icon icon="plus" class="icon-size-2"></fa-icon>
-                </p-button> -->
+                </p-button>
             </div>
             <div>
-
                 <div class="p-inputgroup">
-                    <input type="text" pInputText placeholder="Buscar..." autocomplete="off" [(ngModel)]="customFilter.userName" />
+                    <input type="text" pInputText placeholder="Dirección Alias" autocomplete="off" [(ngModel)]="customFilter.alias" />
                     <button type="button" pButton pRipple icon="pi pi-search" styleClass="p-button-warn" (click)="getData(null);"></button>
                 </div>
 
@@ -43,18 +43,19 @@
     <!-- header fields-->
     <ng-template pTemplate="header">
         <tr>
-            <th pSortableColumn="userId" pResizableColumn [ngStyle]="{ 'display':'none'}" class="p-resizable-column">
-                UserId<p-sortIcon field="userId"></p-sortIcon>
+            <th pSortableColumn="addressBookId" pResizableColumn [ngStyle]="{ 'display':'none'}" class="p-resizable-column">
+                AddressBookId<p-sortIcon field="addressBookId"></p-sortIcon>
             </th>
-            <th pSortableColumn="firstName" pResizableColumn class="p-col">
-                firstName<p-sortIcon field="firstName"></p-sortIcon>
+            <th pSortableColumn="alias" pResizableColumn class="p-col">
+                Dirección Alias<p-sortIcon field="alias"></p-sortIcon>
             </th>
-
-            <th pSortableColumn="lastName" pResizableColumn class="p-col">lastName<p-sortIcon field="lastName"></p-sortIcon>
+            <th pSortableColumn="userFullName" pResizableColumn class="p-col">
+                Usuario<p-sortIcon field="userFullName"></p-sortIcon>
             </th>
-
-            <th pSortableColumn="mlastName" pResizableColumn class="p-col">
-                mLastName<p-sortIcon field="mlastName"></p-sortIcon>
+            <th pSortableColumn="phone" pResizableColumn class="p-col">Teléfono<p-sortIcon field="phone"></p-sortIcon>
+            </th>
+            <th pSortableColumn="email" pResizableColumn class="p-col">
+                eMail<p-sortIcon field="email"></p-sortIcon>
             </th>
 
 
@@ -68,16 +69,16 @@
     <!-- body data-->
     <ng-template pTemplate="body" let-row>
         <tr [pSelectableRow]="row" [pContextMenuRow]="row">
-            <td [ngStyle]="{ 'display':'none'}"> {{row.userId}} </td>
+            <td [ngStyle]="{ 'display':'none'}"> {{row.addressBookId}} </td>
             <td>
-                <div ></div>
                 <p-button class="pr-1" title="Refresh" styleClass="p-button-rounded p-button-text p-0 pl-2 pr-1  m-0" (click)="showMenuContext(dtCtxMenu, $event, row);">
                     <fa-icon icon="ellipsis-v"></fa-icon>
                 </p-button>
-                {{row.firstName}}
+                {{row.alias}}
             </td>
-            <td>{{row.lastName}}</td>
-            <td>{{row.mLastName}}</td>
+            <td>{{row.userFullName }}</td>
+            <td>{{row.phone}}</td>
+            <td>{{row.email}}</td>
             <td class="text-center">{{row.enabled==true?'Yes':'No'}}</td>
         </tr>
     </ng-template>

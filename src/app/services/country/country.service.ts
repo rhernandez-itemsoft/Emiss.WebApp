@@ -37,7 +37,7 @@ export class CountryService extends BaseApiService {
                 _requestDt[key] = value;
             }
         }
-        console.log(_requestDt);
+        
         return this.get<CountryModel[]>(ApiName.Default, EndpointName.Country,  _requestDt);
     }
 

@@ -3,7 +3,7 @@ import { ContextMenu } from 'primeng/contextmenu';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Paginator } from 'primeng/paginator';
 
-import { Directive, Inject, Type, ViewChild } from '@angular/core';
+import { Directive, HostListener, Inject, Type, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { DtUtils } from './dt-utils/dt-utils';
@@ -99,7 +99,8 @@ export class DataTable<T, U> extends DtUtils<T, U> {
         let _conf = Object.assign({},
             {
                 header: this.dialogTitles.new,
-                width: '70%'
+                width: '70%',
+                closeOnEscape: "closeDialog"
             }, conf);
 
 
@@ -116,7 +117,8 @@ export class DataTable<T, U> extends DtUtils<T, U> {
                 {
                     header: this.dialogTitles.edit,
                     width: '70%',
-                    data: this.selectedRow
+                    data: this.selectedRow,
+                    closeOnEscape: "closeDialog"
                 }, conf);
             const ref = this.dialogService.open(this.editComponent, _conf);
 
@@ -133,6 +135,7 @@ export class DataTable<T, U> extends DtUtils<T, U> {
                 {
                     header: this.dialogTitles.delete,
                     width: '70%',
+                    closeOnEscape: "closeDialog"
                 }, conf);
             const ref = this.dialogService.open(this.deleteComponent, _conf);
 
@@ -148,7 +151,8 @@ export class DataTable<T, U> extends DtUtils<T, U> {
             {
                 header: this.dialogTitles.filter,
                 width: '70%',
-                data: this.customFilter
+                data: this.customFilter,
+                closeOnEscape: "closeDialog"
             }, conf);
 
         const ref = this.dialogService.open(this.filterComponent, _conf);
@@ -238,9 +242,6 @@ export class DataTable<T, U> extends DtUtils<T, U> {
                 selectedIndex--;
             } else if (_page > 1) {
                 this.defaultSelected = _length - 1;
-                // cambiamos esto porque estába haciendo un salto de dos páginas
-                // 11-03-2022
-                // this.paginator.changePage(_page - 2);
                 this.paginator.changePage(_page - 2);
                 return;
             }
@@ -312,5 +313,3 @@ export class DataTable<T, U> extends DtUtils<T, U> {
 
 
 }
-
-

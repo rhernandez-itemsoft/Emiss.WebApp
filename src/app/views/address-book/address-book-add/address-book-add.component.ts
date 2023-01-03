@@ -37,17 +37,17 @@ export class AddressBookAddComponent extends DtUtils<AddressBookModel, AddressBo
   frmUser: FormGroup = this._frmBuilder.group({
     // workEmail: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]),
 
-    firstName: new FormControl('Ricardo', [Validators.required, Validators.minLength(3)]),
-    lastName: new FormControl('Hernandez', [Validators.required, Validators.minLength(3)]),
-    mLastName: new FormControl('López'),
+    firstName: new FormControl('PEdro', [Validators.required, Validators.minLength(3)]),
+    lastName: new FormControl('Orozco', [Validators.required, Validators.minLength(3)]),
+    mLastName: new FormControl(''),
     enabled: new FormControl(true, [Validators.required, Validators.minLength(3)]),
   });
 
   //El formulario reactivo
   frmAddressBook: FormGroup = this._frmBuilder.group({
-    alias: new FormControl('Test', [Validators.required, Validators.minLength(3)]),
+    alias: new FormControl('Test2', [Validators.required, Validators.minLength(3)]),
     phone: new FormControl('3211112222', [Validators.required, Validators.minLength(10)]),
-    email: new FormControl('rherl23@gmail.com', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]),
+    email: new FormControl('email@gmail.com', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]),
 
 
     countryId: new FormControl(0, [Validators.required]),
@@ -225,9 +225,9 @@ export class AddressBookAddComponent extends DtUtils<AddressBookModel, AddressBo
           }
         },
         error: (err: HttpErrorResponse) => {
+          this.allStates = [];
+          this.allCities = [];
           if (err.status != 404) {
-            this.allStates = [];
-            this.allCities = [];
             const _msg = (err.error != null && err.error.message ? err.error.message : err.message || err.statusText);
             const _severity = err.status == 404 ? 'info' : 'error';
             this.msg.add({ severity: _severity, summary: 'Error', detail: _msg });
@@ -263,8 +263,8 @@ export class AddressBookAddComponent extends DtUtils<AddressBookModel, AddressBo
           }
         },
         error: (err: HttpErrorResponse) => {
+          this.allCities = [];
           if (err.status != 404) {
-            this.allCities = [];
             const _msg = (err.error != null && err.error.message ? err.error.message : err.message || err.statusText);
             const _severity = err.status == 404 ? 'info' : 'error';
             this.msg.add({ severity: _severity, summary: 'Error', detail: _msg });

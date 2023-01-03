@@ -20,7 +20,7 @@
             </div>
             <div>
                 <div class="p-inputgroup">
-                    <input type="text" pInputText placeholder="Dirección Alias" autocomplete="off" [(ngModel)]="customFilter.alias" />
+                    <input type="text" pInputText placeholder="Dirección Alias" autocomplete="off" (keypress)="onEnterSearchAlias($event)" [(ngModel)]="customFilter.alias" />
                     <button type="button" pButton pRipple icon="pi pi-search" styleClass="p-button-warn" (click)="getData(null);"></button>
                 </div>
 

@@ -78,7 +78,6 @@ export class AddressBookComponent extends DataTable<AddressBookModel, AddressBoo
 
   }
 
-
   //inicializa el data table
   override initDataTable() {
     this.newRequestDt.fields = 'addressBookId,alias,phone,email,country,city,state,countryId,stateId,cityId,street,subdivision,reference,zipCode,enabled,user';
@@ -104,8 +103,9 @@ export class AddressBookComponent extends DataTable<AddressBookModel, AddressBoo
           }
         },
         error: (err: HttpErrorResponse) => {
+          this.responseDt = this.emptyResonse();
+
           if (err.status != 404) {
-            this.responseDt = this.emptyResonse();
             const _msg = (err.error != null && err.error.message ? err.error.message : err.message || err.statusText);
             const _severity = err.status == 404 ? 'info' : 'error';
 
@@ -115,7 +115,12 @@ export class AddressBookComponent extends DataTable<AddressBookModel, AddressBoo
       });
   }
 
-
+  //Search by alias when enter key press
+  onEnterSearchAlias($event: any) {
+    if ($event.keyCode == 13) {
+      this.getData(null);
+    }
+  }
 
   //export to csv
   override exportToCsv() {
@@ -211,7 +216,6 @@ export class AddressBookComponent extends DataTable<AddressBookModel, AddressBoo
 
   //show dialog filter addressBooks
   override showDialogFilter(): DynamicDialogRef {
-
     this.dialogTitles.filter = 'Filtrar';
     return super.showDialogFilter({ width: '80rem' });
   }

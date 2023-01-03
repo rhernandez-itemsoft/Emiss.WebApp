@@ -31,7 +31,10 @@
 			<!-- Address Book Form -->
 			<form [formGroup]="frmAddressBook">
 				<div class="grid p-fluid  p-formgrid  ">
-
+					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
+						<label for="alias">* Alias</label>
+						<input type="text" pInputText autocomplete="off" maxlength="10" formControlName="alias" placeholder="Unique Name" />
+					</div>
 					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
 						<label for="phone">* Phone</label>
 						<input type="text" pInputText autocomplete="off" maxlength="10" formControlName="phone" placeholder="(###)###-####" />

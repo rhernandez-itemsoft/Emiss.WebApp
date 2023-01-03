@@ -11,43 +11,44 @@
 
 
 
-.p-selectbutton .p-button{
+.p-selectbutton .p-button {
     background: transparent;
-    color:#333333;
+    color: #333333;
     min-width: 4rem;
 }
 
-.p-selectbutton .p-button:not(.p-disabled):not(.p-highlight):hover{
+.p-selectbutton .p-button:not(.p-disabled):not(.p-highlight):hover {
     background: transparent;
-    color:#333333;
+    color: #333333;
 }
 
-p-dialog-footer{
+p-dialog-footer {
     padding-right: 0px;
 }
 
-.p-dialog .p-dialog-content{
+.p-dialog .p-dialog-content {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
 }
 
-.p-dialog .p-dialog-header{
+.p-dialog .p-dialog-header {
     padding-left: 1.5rem;
 }
 
 
-a{
+a {
     text-decoration: none;
 }
-a.decoration{
+
+a.decoration {
     text-decoration: underline;
 }
 
-.normal-cursor{
-    cursor:auto !important;
+.normal-cursor {
+    cursor: auto !important;
 }
 
-.layout-topbar .layout-topbar-wrapper .layout-topbar-right .profile-item > ul > li.profile-submenu-header{
+.layout-topbar .layout-topbar-wrapper .layout-topbar-right .profile-item>ul>li.profile-submenu-header {
     background-image: none;
     background-color: #ffffff;
 }
@@ -55,8 +56,18 @@ a.decoration{
 
 
 .p-inputtext,
-.p-inputgroup ,
-.p-button.p-button-icon-only
-{
+.p-inputgroup,
+.p-button.p-button-icon-only {
     height: 2.5rem;
+}
+
+
+.p-datatable .p-datatable-tbody>tr.p-highlight>td>p-button>button fa-icon {
+    background-color: #ffffff;
+    color: #bcbdbf;
+}
+
+.p-datatable .p-datatable-tbody>tr.p-highlight>td>p-button>button:hover {
+    background-color: transparent;
+    border: #bcbdbf;
 }

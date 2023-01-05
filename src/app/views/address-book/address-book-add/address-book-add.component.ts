@@ -296,7 +296,7 @@ export class AddressBookAddComponent extends DtUtils<AddressBookModel, AddressBo
         next: (response: any) => {
           this.doingRequest = false;
 
-          this.msg.add({ severity: 'success', summary: 'Felicidades!', detail: 'El usuario ha sido creado.', });
+          this.msg.add({ severity: 'success', summary: 'Felicidades!', detail: 'El dirección ha sido creada.', });
           this.clear();
           this.ref.close(response.data);
         },

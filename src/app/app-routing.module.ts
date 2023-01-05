@@ -18,6 +18,7 @@ import { StateService } from './services/state/state.service';
 import { UserService } from './services/user/user.service';
 import { AddressBookAddComponent } from './views/address-book/address-book-add/address-book-add.component';
 import { AddressBookDeleteComponent } from './views/address-book/address-book-delete/address-book-delete.component';
+import { AddressBookDetailComponent } from './views/address-book/address-book-detail/address-book-detail.component';
 import { AddressBookEditComponent } from './views/address-book/address-book-edit/address-book-edit.component';
 import { AddressBookFilterComponent } from './views/address-book/address-book-filter/address-book-filter.component';
 import { AddressBookComponent } from './views/address-book/address-book.component';
@@ -60,7 +61,8 @@ export const routes: Routes = [
     AddressBookAddComponent,
     AddressBookEditComponent,
     AddressBookDeleteComponent,
-    AddressBookFilterComponent
+    AddressBookFilterComponent,
+    AddressBookDetailComponent
   ],
   exports: [
     RouterModule,

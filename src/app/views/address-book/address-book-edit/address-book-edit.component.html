@@ -3,7 +3,6 @@
 		<div class="scroll-modal pt-3">
 			<!-- User form -->
 			<form [formGroup]="frmUser">
-
 				<div class="grid p-fluid  p-formgrid ">
 					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
 						<label for="firstName">* First Name</label>
@@ -24,7 +23,6 @@
 						<label>M. Last Name</label>
 						<input type="text" pInputText autocomplete="off" maxlength="100" formControlName="mLastName" />
 					</div>
-
 				</div>
 			</form>
 
@@ -94,9 +92,6 @@
 								</div>
 							</ng-template>
 						</p-dropdown>
-
-						<!-- <p-dropdown [options]="allStates" appendTo="body" [readonly]="frmAddressBook.controls['country'].value==null" optionLabel="name" [filter]="true" filterBy="name" (onFilter)="onFilterState($event)"
-							(onClear)="onClearState($event);" [showClear]="true" formControlName="state" placeholder="- Seleccione -" emptyMessage="No se encontraron coincidencias"></p-dropdown> -->
 					</div>
 
 					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">
@@ -120,8 +115,6 @@
 								</div>
 							</ng-template>
 						</p-dropdown>
-						<!-- <p-dropdown [options]="allCities" appendTo="body" [readonly]="frmAddressBook.controls['state'].value==null" optionLabel="name" [filter]="true" filterBy="name" (onFilter)="onFilterCity($event)"
-							(onClear)="onClearCity($event);" [showClear]="true" formControlName="city" placeholder="- Seleccione -" emptyMessage="No se encontraron coincidencias"></p-dropdown> -->
 					</div>
 
 					<div class="sm:col-12 md:col-6 lg:col-4 xl:col-4">

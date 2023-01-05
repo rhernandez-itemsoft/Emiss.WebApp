@@ -5,11 +5,15 @@
 
 
 <h3 class="mb-3">Agenda de Direcciones</h3>
+<app-address-book-detail [show]="displayDetail" [data]="selectedRow" (onHide)="displayDetail=false" (onClose)="closeDialogDetail($event)" (onGoBackRow)="goBackRow();" (onGoNextRow)="goNextRow();"></app-address-book-detail>
+
+
 <!-- Tabla que muestra los datos -->
-<p-table #dTable [value]="responseDt.data" dataKey="userId" [lazy]="true" (onLazyLoad)="getData($event)" [loading]="false" [loadingIcon]="'fa-spinner'" [resizableColumns]="true" sortField="userId" [sortOrder]="1" selectionMode="single"
-    [(selection)]="selectedRow" [(contextMenuSelection)]="selectedRow" [contextMenu]="dtCtxMenu" (contextmenu)="hideExportMenuContext();" [rows]="newRequestDt.PageSize" [paginator]="false"
+<p-table #dTable [value]="responseDt.data" dataKey="addressBookId" [lazy]="true" (onLazyLoad)="getData($event)" [loading]="false" [loadingIcon]="'fa-spinner'" [resizableColumns]="true" sortField="userId" [sortOrder]="1"
+    selectionMode="single" [(selection)]="selectedRow" [(contextMenuSelection)]="selectedRow" [contextMenu]="dtCtxMenu" (contextmenu)="hideExportMenuContext();" [rows]="newRequestDt.PageSize" [paginator]="false"
     class="p-datatable p-datatable-gridlines  p-component p-datatable-resizable p-datatable-resizable-fit p-datatable-header">
 
+    
     <!-- header controls -->
     <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-wrap card-container purple-container">
@@ -23,7 +27,6 @@
                     <input type="text" pInputText placeholder="Dirección Alias" autocomplete="off" (keypress)="onEnterSearchAlias($event)" [(ngModel)]="customFilter.alias" />
                     <button type="button" pButton pRipple icon="pi pi-search" styleClass="p-button-warn" (click)="getData(null);"></button>
                 </div>
-
             </div>
             <div>
                 <p-button icon="icon" [styleClass]="'p-button-rounded p-button-text btn-bg-white p-button-info mr-1 '+ (selectedRow? 'p-shadow-3':'')" title="Exportar" (click)="showMenuContextExport(dtCtxMenuExport, $event)">

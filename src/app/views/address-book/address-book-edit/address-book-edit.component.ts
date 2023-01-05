@@ -80,6 +80,7 @@ export class AddressBookEditComponent extends DtUtils<AddressBookModel, AddressB
     private stateService: StateService,
     private cityService: CityService,
     private dialogConfig: DynamicDialogConfig,
+    private addressBookService: AddressBookService,
   ) {
     super('addressBookId', EndpointName.AddressBook);
   }
@@ -123,19 +124,19 @@ export class AddressBookEditComponent extends DtUtils<AddressBookModel, AddressB
         state: this.data.state,
         city: this.data.city,
 
-        
+
         zipCode: this.data.zipCode,
 
         street: this.data.street,
-        Subdivision: this.data.subdivision,
-        Reference: this.data.reference,
+        subdivision: this.data.subdivision,
+        reference: this.data.reference,
       });
 
       //get all countries
-      this.getAllCountries(this.data.country?.name ?? '', 
-          this.getAllStates(this.data.state?.name ?? '', 
-              this.getAllCities(this.data.city?.name ?? '')
-          )
+      this.getAllCountries(this.data.country?.name ?? '',
+        this.getAllStates(this.data.state?.name ?? '',
+          this.getAllCities(this.data.city?.name ?? '')
+        )
       );
 
     } else {
@@ -306,8 +307,6 @@ export class AddressBookEditComponent extends DtUtils<AddressBookModel, AddressB
           }
         }
       });
-
-
   }
 
   //Obtiene las ciudades que se pueden elegir en cada estado de cada pais
@@ -355,22 +354,22 @@ export class AddressBookEditComponent extends DtUtils<AddressBookModel, AddressB
     }
 
     this.doingRequest = true;
-    // this.addressBookService.put(ApiName.Default, EndpointName.AddressBook, _input)
-    //   .subscribe({
-    //     next: (response: any) => {
-    //       this.doingRequest = false;
+    this.addressBookService.put(ApiName.Default, EndpointName.AddressBook, _input)
+      .subscribe({
+        next: (response: any) => {
+          this.doingRequest = false;
 
-    //       this.msg.add({ severity: 'success', summary: 'Felicidades!', detail: 'El usuario ha sido creado.', });
-    //       this.clear();
-    //       this.ref.close(response.data);
-    //     },
-    //     error: (err: HttpErrorResponse) => {
-    //       this.doingRequest = false;
-    //       const _msg = (err.error != null && err.error.message ? err.error.message : err.message || err.statusText);
-    //       const _severity = err.status == 404 ? 'info' : 'error';
-    //       this.msg.add({ severity: _severity, summary: 'Error', detail: _msg });
-    //     },
-    //   });
+          this.msg.add({ severity: 'success', summary: 'Felicidades!', detail: 'La dirección ha sido actualizada.', });
+          this.clear();
+          this.ref.close(response.data);
+        },
+        error: (err: HttpErrorResponse) => {
+          this.doingRequest = false;
+          const _msg = (err.error != null && err.error.message ? err.error.message : err.message || err.statusText);
+          const _severity = err.status == 404 ? 'info' : 'error';
+          this.msg.add({ severity: _severity, summary: 'Error', detail: _msg });
+        },
+      });
   }
 
   //ejecuta acciones antes de guardar como validaciones, formateos, etc
@@ -393,6 +392,8 @@ export class AddressBookEditComponent extends DtUtils<AddressBookModel, AddressB
     if (user.userId < 1) {
       addrBook.user = user;
     }
+
+
 
     return addrBook;
   }

@@ -17,6 +17,9 @@ import { ExternalService } from './services/external/external.service';
 import { StateService } from './services/state/state.service';
 import { UserService } from './services/user/user.service';
 import { AddressBookAddComponent } from './views/address-book/address-book-add/address-book-add.component';
+import { AddressBookDeleteComponent } from './views/address-book/address-book-delete/address-book-delete.component';
+import { AddressBookEditComponent } from './views/address-book/address-book-edit/address-book-edit.component';
+import { AddressBookFilterComponent } from './views/address-book/address-book-filter/address-book-filter.component';
 import { AddressBookComponent } from './views/address-book/address-book.component';
 import { ErrorComponent } from './views/shared/error/error.component';
 import { LayoutComponent } from './views/shared/layout/layout.component';
@@ -54,7 +57,10 @@ export const routes: Routes = [
     UserAddComponent,
     
     AddressBookComponent,
-    AddressBookAddComponent
+    AddressBookAddComponent,
+    AddressBookEditComponent,
+    AddressBookDeleteComponent,
+    AddressBookFilterComponent
   ],
   exports: [
     RouterModule,

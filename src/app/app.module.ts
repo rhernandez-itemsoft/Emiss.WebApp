@@ -14,11 +14,10 @@ import { NotFoundComponent } from './views/shared/not-found/not-found.component'
     LayoutComponent,
   ],
   imports: [
-   
     AppRoutingModule,
   ],
   exports:[
-    AppRoutingModule
+   // AppRoutingModule
   ],
  
   bootstrap: [AppComponent],

@@ -1,13 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable, Subscription } from 'rxjs';
-import { AddressBookModel } from 'src/app/models/address-book-model';
-import { CityModel, CityFilter } from 'src/app/models/city-model';
-import { CountryModel, CountryFilter } from 'src/app/models/country-model';
-import { StateModel, StateFilter } from 'src/app/models/state-model';
+import { CityModel } from 'src/app/models/city-model';
+import { CountryModel } from 'src/app/models/country-model';
+import { StateModel } from 'src/app/models/state-model';
 import { UserModel, UserFilter } from 'src/app/models/user-model';
 import { CallBackService } from 'src/app/services/callback/callback.service';
 import { CityService } from 'src/app/services/city/city.service';
@@ -17,10 +15,6 @@ import { StateService } from 'src/app/services/state/state.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { DtUtils } from 'src/app/utils/data-table/dt-utils/dt-utils';
 import { EndpointName, ApiName } from 'src/environment';
-// import {SkeletonModule} from 'primeng/skeleton';
-
-
-// https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:28000|country:Mx&key=AIzaSyDtRvGkjoltD8q2bWqttM_gX04ATGfrUQY
 
 @Component({
   selector: 'app-user-add',
@@ -28,6 +22,7 @@ import { EndpointName, ApiName } from 'src/environment';
   styleUrls: ['./user-add.component.scss']
 })
 export class UserAddComponent extends DtUtils<UserModel, UserFilter>  {
+
   //para saber cuand se realiza una llamada ajax
   doingRequest: boolean = false;
 
@@ -36,7 +31,6 @@ export class UserAddComponent extends DtUtils<UserModel, UserFilter>  {
   allStates: StateModel[] = [];
 
   allCities: CityModel[] = [];
-
 
 
   //El formulario reactivo

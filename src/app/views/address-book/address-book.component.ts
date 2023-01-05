@@ -27,7 +27,6 @@ export class AddressBookComponent extends DataTable<AddressBookModel, AddressBoo
   constructor(
     public domSanitizer: DomSanitizer,
     private addressBookervice: AddressBookService,
-
     private msg: MessageService,
     public ref: DynamicDialogRef,
     public chRef: ChangeDetectorRef,
@@ -71,7 +70,11 @@ export class AddressBookComponent extends DataTable<AddressBookModel, AddressBoo
 
     //init custom filters
     this.customFilter = <AddressBookFilter>{
-      addressBookId: null,
+      // addressBookId: null,
+      address: '',
+      fullName: '',
+      phone: '',
+      email: '',
       enabled: true,
       alias: ''
     };
@@ -80,8 +83,8 @@ export class AddressBookComponent extends DataTable<AddressBookModel, AddressBoo
 
   //inicializa el data table
   override initDataTable() {
-    this.newRequestDt.fields = 'addressBookId,alias,phone,email,country,city,state,countryId,stateId,cityId,street,subdivision,reference,zipCode,enabled,user';
-    this.newRequestDt.exportFields = 'addressBookId,alias,userFullName';
+    this.newRequestDt.fields = 'addressBookId,alias,phone,email,countryId,stateId,cityId,street,subdivision,reference,zipCode,enabled,user,country,city,state';
+    this.newRequestDt.exportFields = 'addressBookId,alias,user.fullName';
     this.newRequestDt.sortField = 'alias';
   }
 
@@ -113,13 +116,6 @@ export class AddressBookComponent extends DataTable<AddressBookModel, AddressBoo
           }
         },
       });
-  }
-
-  //Search by alias when enter key press
-  onEnterSearchAlias($event: any) {
-    if ($event.keyCode == 13) {
-      this.getData(null);
-    }
   }
 
   //export to csv
@@ -219,6 +215,15 @@ export class AddressBookComponent extends DataTable<AddressBookModel, AddressBoo
     this.dialogTitles.filter = 'Filtrar';
     return super.showDialogFilter({ width: '80rem' });
   }
+
+  //Search by alias when enter key press
+  onEnterSearchAlias($event: any) {
+    if ($event.keyCode == 13) {
+      this.getData(null);
+    }
+  }
+
+
 
 }
 

@@ -90,7 +90,8 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faDownload, faEdit, faEllipsisH, faEllipsisV, faEye, faFileCsv, faFileExcel, faFilePdf,
-  faFilter, faPlus, faSave, faSearchPlus, faSync, faTrash, faWindowMaximize, faWindowMinimize
+  faFilter, faPlus, faSave, faSearchPlus, faSync, faTrash, faWindowMaximize, faWindowMinimize,
+  faCheck
 } from '@fortawesome/free-solid-svg-icons';
 import { BaseApiService } from '../services/base-service/base-api.service';
 
@@ -300,7 +301,8 @@ export class PrimeModule {
   constructor(library: FaIconLibrary) {
     // Add an icon to the library for convenient access in other components
     library.addIcons(faPlus, faEdit, faTrash, faSearchPlus, faFileExcel, faFilePdf, faFileCsv, faSync, faFilter, faEye, faWindowMaximize, faWindowMinimize,
-      faEllipsisH, faEllipsisV, faSave, faDownload);
+      faEllipsisH, faEllipsisV, faSave, faDownload, faCheck
+      );
 
   }
 }

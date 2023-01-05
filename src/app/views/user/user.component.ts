@@ -57,13 +57,16 @@ export class UserComponent extends DataTable<UserModel, UserFilter> implements I
 
   //initialice this module
   private initialice() {
+
     // show breadcrumb
     this.setBreadcrumb();
 
-     //init context menu
-     this.initContextMenu();
+    //init context menu
+    this.initContextMenu();
 
-     this.dtMenuItem.push({ label: 'Seleccionar', icon: 'fa pi-fw pi pi-pencil', command: () => this.showDialogEdit() });
+    //add select row to context menu
+    this.dtMenuItem = [];
+    this.dtMenuItem.push({ label: 'Seleccionar', icon: 'fa pi-fw pi pi-check', command: () => this.selectRow(this.selectedRow) });
 
     //init the form filters
     this.initFormFilters();
@@ -73,17 +76,11 @@ export class UserComponent extends DataTable<UserModel, UserFilter> implements I
 
     //init custom filters
     this.customFilter = <UserFilter>{
-      groupId: null,
       enabled: true,
-      userName: '',
-      workEmail: '',
-      firstName: '',
-      lastName: '',
-      mLastName: '',
+      fullName: '',
     };
 
   }
-
 
   //inicializa el data table
   override initDataTable() {
@@ -110,19 +107,17 @@ export class UserComponent extends DataTable<UserModel, UserFilter> implements I
           }
         },
         error: (err: HttpErrorResponse) => {
-          if (err.status != 404 ){
+          if (err.status != 404) {
             this.responseDt = this.emptyResonse();
-            const _msg = (err.error != null && err.error.message  ? err.error.message : err.message || err.statusText);
+            const _msg = (err.error != null && err.error.message ? err.error.message : err.message || err.statusText);
             const _severity = err.status == 404 ? 'info' : 'error';
-  
+
             this.msg.add({ severity: _severity, summary: 'Error', detail: _msg });
 
           }
         },
       });
   }
-
-
 
   //export to csv
   override exportToCsv() {
@@ -139,7 +134,7 @@ export class UserComponent extends DataTable<UserModel, UserFilter> implements I
           return;
         },
         error: (err: HttpErrorResponse) => {
-          const _msg = (err.error != null && err.error.message  ? err.error.message : err.message || err.statusText);
+          const _msg = (err.error != null && err.error.message ? err.error.message : err.message || err.statusText);
           const _severity = err.status == 404 ? 'info' : 'error';
           this.msg.add({ severity: _severity, summary: 'Error', detail: _msg });
         },
@@ -161,7 +156,7 @@ export class UserComponent extends DataTable<UserModel, UserFilter> implements I
           return;
         },
         error: (err: HttpErrorResponse) => {
-          const _msg = (err.error != null && err.error.message  ? err.error.message : err.message || err.statusText);
+          const _msg = (err.error != null && err.error.message ? err.error.message : err.message || err.statusText);
           const _severity = err.status == 404 ? 'info' : 'error';
           this.msg.add({ severity: _severity, summary: 'Error', detail: _msg });
         },
@@ -184,7 +179,7 @@ export class UserComponent extends DataTable<UserModel, UserFilter> implements I
           return;
         },
         error: (err: HttpErrorResponse) => {
-          const _msg = (err.error != null && err.error.message  ? err.error.message : err.message || err.statusText);
+          const _msg = (err.error != null && err.error.message ? err.error.message : err.message || err.statusText);
           const _severity = err.status == 404 ? 'info' : 'error';
           this.msg.add({ severity: _severity, summary: 'Error', detail: _msg });
         },
@@ -203,7 +198,7 @@ export class UserComponent extends DataTable<UserModel, UserFilter> implements I
     if (this.selectedRow == null) {
       return null;
     }
-    this.dialogTitles.edit = 'Editar: ' + `${this.selectedRow.firstName} ${this.selectedRow.lastName} ${this.selectedRow.mLastName}` ;
+    this.dialogTitles.edit = 'Editar: ' + `${this.selectedRow.firstName} ${this.selectedRow.lastName} ${this.selectedRow.mLastName}`;
     return super.showDialogEdit({ width: '80rem' });
   }
 
@@ -212,7 +207,7 @@ export class UserComponent extends DataTable<UserModel, UserFilter> implements I
     if (this.selectedRow == null) {
       return null;
     }
-    this.dialogTitles.delete = 'Eliminar: ' + `${this.selectedRow.firstName} ${this.selectedRow.lastName} ${this.selectedRow.mLastName}` ;
+    this.dialogTitles.delete = 'Eliminar: ' + `${this.selectedRow.firstName} ${this.selectedRow.lastName} ${this.selectedRow.mLastName}`;
     return super.showDialogDelete({ width: '40rem', data: this.selectedRow });
   }
 
@@ -223,5 +218,24 @@ export class UserComponent extends DataTable<UserModel, UserFilter> implements I
     return super.showDialogFilter({ width: '80rem' });
   }
 
+  //close this dialog
+  close(): void {
+    this.ref.close(null);
+  }
+
+  //on select the role
+  selectRow(row?: any) {
+    if (row != undefined) {
+      this.selectedRow = row;
+      this.ref.close(this.selectedRow);
+    }
+  }
+
+  //Search by fullName when enter key press
+  onEnterSearchFullName($event: any) {
+    if ($event.keyCode == 13) {
+      this.getData(null);
+    }
+  }
 }
 

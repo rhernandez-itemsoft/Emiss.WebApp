@@ -36,9 +36,9 @@ export class AddressBookAddComponent extends DtUtils<AddressBookModel, AddressBo
   //El formulario reactivo
   frmUser: FormGroup = this._frmBuilder.group({
     // workEmail: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]),
-
-    firstName: new FormControl('PEdro', [Validators.required, Validators.minLength(3)]),
-    lastName: new FormControl('Orozco', [Validators.required, Validators.minLength(3)]),
+    userId: new FormControl(null),
+    firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    lastName: new FormControl('', [Validators.required, Validators.minLength(3)]),
     mLastName: new FormControl(''),
     enabled: new FormControl(true, [Validators.required, Validators.minLength(3)]),
   });
@@ -84,7 +84,6 @@ export class AddressBookAddComponent extends DtUtils<AddressBookModel, AddressBo
 
   //Inicializa cuando se muestra la pantalla
   ngOnInit(): void {
-    // this.getAllGroups();
     this.getAllCountries('');
   }
 
@@ -160,7 +159,18 @@ export class AddressBookAddComponent extends DtUtils<AddressBookModel, AddressBo
 
     const ref = this.dialogService.open(UserComponent, _conf);
     ref.onClose.subscribe((response: any) => {
-      console.log(response);
+      if (response) {
+        this.frmUser.patchValue({
+          userId: response.userId,
+          firstName: response.firstName,
+          lastName: response.lastName,
+          mLastName: response.mLastName,
+        });
+
+        this.frmAddressBook.patchValue({
+          userId: response.userId,
+        });
+      }
     });
     return ref;
   }
@@ -315,7 +325,10 @@ export class AddressBookAddComponent extends DtUtils<AddressBookModel, AddressBo
     addrBook.city = null;
 
     let user: UserModel = Object.assign({}, <UserModel>this.frmUser.value);
-    addrBook.user = user;
+    user.userId = user.userId ?? 0;
+    if (user.userId < 1) {
+      addrBook.user = user;
+    }
 
     return addrBook;
   }

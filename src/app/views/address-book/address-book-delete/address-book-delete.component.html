@@ -1,1 +1,17 @@
-<p>address-book-delete works!</p>
+<p-dynamicdialog>
+    <p-dialog-content>
+        <div class="p-2 pt-3 pb-3" *ngIf="data">
+            <label>Si usted elimina esta dirección es probable que tambien se elimine el usuario relacionado.</label>
+            <br />
+            <br />
+            ¿Está usted seguro de eliminar esta dirección: <b>{{data.alias}}</b>?
+        </div>
+    </p-dialog-content>
+
+    <p-dialog-footer class="flex justify-content-end flex-wrap card-container green-container">
+        <button type="button" pButton pRipple [disabled]="doingRequest==true" icon="pi pi-check" (click)="delete()" label="Sí" class="p-button-danger mr-3">
+            <p-progressSpinner class="buttonSpinner" *ngIf="doingRequest==true"></p-progressSpinner>
+        </button>
+        <button type="button" pButton pRipple (click)="close()" label="Cancelar" class="p-button-outlined"></button>
+    </p-dialog-footer>
+</p-dynamicdialog>

@@ -12,12 +12,12 @@ export class AddressBookModel {
     city: CityModel | null = null;
     state: StateModel | null = null;
     countryId: number | null = 0;
-    stateId: number | null= 0;
-    cityId: number | null= 0;
+    stateId: number | null = 0;
+    cityId: number | null = 0;
     street: string = '';
     subdivision: string = '';
     reference: string = '';
-    zipCode:  string = '';
+    zipCode: string = '';
     enabled: boolean = false;
 
     user: UserModel | null = null;
@@ -26,26 +26,12 @@ export class AddressBookModel {
 
 
 export class AddressBookFilter {
-    addressBookId: number | null = 0;
-
     alias: string = '';
+    fullName: string = '';
+    address: string = '';
+    phone: string = '';
+    email: string = '';
 
-    // phone: string = '';
-    // email: string = '';
-
-    // country: CountryModel | null = null;
-    // city: CityModel | null = null;
-    // state: StateModel | null = null;
-    // countryId: number | null = 0;
-    // stateId: number | null= 0;
-    // cityId: number | null= 0;
-
-    // street: string = '';
-    // subdivision: string = '';
-    // reference: string = '';
-
-    // zipCode:  string = '';
-
-    enabled: boolean = false;
+    enabled: boolean | string = true;
 
 }

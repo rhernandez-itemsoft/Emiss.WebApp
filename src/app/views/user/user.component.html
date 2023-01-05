@@ -1,9 +1,8 @@
 <p-toast></p-toast>
-<p-contextMenu #dtCtxMenu [model]="dtMenuItem"  appendTo="body"></p-contextMenu>
-<p-contextMenu #dtCtxMenuExport [model]="dtMenuExportItem"  appendTo="body"></p-contextMenu>
-<div  #btnX ></div>
+<p-contextMenu #dtCtxMenu [model]="dtMenuItem" appendTo="body"></p-contextMenu>
+<p-contextMenu #dtCtxMenuExport [model]="dtMenuExportItem" appendTo="body"></p-contextMenu>
 
-<!-- <h3 class="mb-3">Nuevo Usuario</h3> -->
+
 <!-- Tabla que muestra los datos -->
 <p-table #dTableX [value]="responseDt.data" dataKey="userId" [lazy]="true" (onLazyLoad)="getData($event)" [loading]="false" [loadingIcon]="'fa-spinner'" [resizableColumns]="true" sortField="userId" [sortOrder]="1" selectionMode="single"
     [(selection)]="selectedRow" [(contextMenuSelection)]="selectedRow" [contextMenu]="dtCtxMenu" (contextmenu)="hideExportMenuContext();" [rows]="newRequestDt.PageSize" [paginator]="false"
@@ -13,26 +12,20 @@
     <ng-template pTemplate="caption">
         <div class="flex justify-content-between flex-wrap card-container purple-container">
             <div class="flex">
-                <!-- <p-button icon="icon" label="Agregar" styleClass="p-button-rounded p-button-text btn-bg-white  p-button-info mr-1" (click)="showDialogAdd();">
-                    <fa-icon icon="plus" class="icon-size-2"></fa-icon>
-                </p-button> -->
+                <p-button icon="icon" label="Seleccionar" styleClass="p-button-rounded p-button-text btn-bg-white  p-button-info mr-1" (click)="selectRow(selectedRow);">
+                    <fa-icon icon="check" class="icon-size-2"></fa-icon>
+                </p-button>
             </div>
             <div>
-
                 <div class="p-inputgroup">
-                    <input type="text" pInputText placeholder="Buscar..." autocomplete="off" [(ngModel)]="customFilter.userName" />
+                    <input type="text" pInputText placeholder="Buscar..." autocomplete="off" (keypress)="onEnterSearchFullName($event)" [(ngModel)]="customFilter.fullName" />
                     <button type="button" pButton pRipple icon="pi pi-search" styleClass="p-button-warn" (click)="getData(null);"></button>
                 </div>
-
             </div>
             <div>
                 <p-button icon="icon" [styleClass]="'p-button-rounded p-button-text btn-bg-white p-button-info mr-1 '+ (selectedRow? 'p-shadow-3':'')" title="Exportar" (click)="showMenuContextExport(dtCtxMenuExport, $event)">
                     <fa-icon icon="download" class="icon-size-2"></fa-icon>
                 </p-button>
-                <p-button icon="icon" [styleClass]="'p-button-rounded p-button-text btn-bg-white p-button-info mr-1 '+ (selectedRow? 'p-shadow-3':'')" title="Filtrar" (click)="showDialogFilter();">
-                    <fa-icon icon="filter" class="icon-size-2"></fa-icon>
-                </p-button>
-
                 <p-button icon="icon" [styleClass]="'p-button-rounded p-button-text btn-bg-white p-button-info mr-1 '+ (selectedRow? 'p-shadow-3':'')" title="Refrescar" (click)="refreshData();">
                     <fa-icon icon="sync" class="icon-size-2"></fa-icon>
                 </p-button>
@@ -67,10 +60,10 @@
 
     <!-- body data-->
     <ng-template pTemplate="body" let-row>
-        <tr [pSelectableRow]="row" [pContextMenuRow]="row">
+        <tr [pSelectableRow]="row" [pContextMenuRow]="row" (dblclick)="selectRow(row)">
             <td [ngStyle]="{ 'display':'none'}"> {{row.userId}} </td>
             <td>
-                <div ></div>
+                <div></div>
                 <p-button class="pr-1" title="Refresh" styleClass="p-button-rounded p-button-text p-0 pl-2 pr-1  m-0" (click)="showMenuContext(dtCtxMenu, $event, row);">
                     <fa-icon icon="ellipsis-v"></fa-icon>
                 </p-button>

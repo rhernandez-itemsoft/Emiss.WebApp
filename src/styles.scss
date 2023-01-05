@@ -23,6 +23,7 @@
 }
 
 p-dialog-footer {
+    padding: .5rem;
     padding-right: 0px;
 }
 
@@ -57,10 +58,15 @@ a.decoration {
 
 .p-inputtext,
 .p-inputgroup,
-.p-button.p-button-icon-only {
+.p-button,
+.p-button.p-button-icon-only,
+.p-paginator .p-dropdown,
+.p-buttonset .p-button {
     height: 2.5rem;
 }
-
+.p-fluid .p-dropdown .p-dropdown-label{
+    padding-top: 0.5rem;
+}
 
 .p-datatable .p-datatable-tbody>tr.p-highlight>td>p-button>button fa-icon {
     background-color: #ffffff;
